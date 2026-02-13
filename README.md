@@ -1,5 +1,5 @@
 
-# Building a Full LTE Network using srsRAN + Open5GS with over WSL (No SDR Required)
+# Building a Full LTE Network using srsRAN + Open5GS over WSL (No SDR Required)
 
 ## Introduction
 This project documents the complete implementation of a fully functional LTE network running entirely on a single laptop without any SDR hardware. The lab combines srsRAN 4G for the radio access network and Open5GS for the EPC core, interconnected through ZeroMQ virtual RF, and deployed inside WSL (Windows Subsystem for Linux).
@@ -19,6 +19,65 @@ This setup allowed you to validate the below:
 All of these will be achieved without SDR hardware.
 
 <br>
+
+## WSL preparation for Open5GS lab
+You first need to install and enable WSL on your Windows machine.
+1. Open PowerShell as Administrator and run ```wsl --install``` to enables WSL, downloads the default kernel, and sets up WSL.
+2. After reboot, ensure WSL2 is the default:
+   ```
+   wsl --set-default-version 2
+   ```
+   
+1. In a PowerShell terminal, run wsl --list --online to see a list of all available distros and versions:
+   ```
+   The following is a list of valid distributions that can be installed.
+   Install using 'wsl.exe --install <Distro>'.
+
+   NAME                            FRIENDLY NAME
+   Ubuntu                          Ubuntu
+   Ubuntu-24.04                    Ubuntu 24.04 LTS
+   openSUSE-Tumbleweed             openSUSE Tumbleweed
+   openSUSE-Leap-16.0              openSUSE Leap 16.0
+   SUSE-Linux-Enterprise-15-SP7    SUSE Linux Enterprise 15 SP7
+   SUSE-Linux-Enterprise-16.0      SUSE Linux Enterprise 16.0
+   kali-linux                      Kali Linux Rolling
+   Debian                          Debian GNU/Linux
+   AlmaLinux-8                     AlmaLinux OS 8
+   AlmaLinux-9                     AlmaLinux OS 9
+   AlmaLinux-Kitten-10             AlmaLinux OS Kitten 10
+   AlmaLinux-10                    AlmaLinux OS 10
+   archlinux                       Arch Linux
+   FedoraLinux-43                  Fedora Linux 43
+   FedoraLinux-42                  Fedora Linux 42
+   eLxr                            eLxr 12.12.0.0 GNU/Linux
+   Ubuntu-20.04                    Ubuntu 20.04 LTS
+   Ubuntu-22.04                    Ubuntu 22.04 LTS
+   OracleLinux_7_9                 Oracle Linux 7.9
+   OracleLinux_8_10                Oracle Linux 8.10
+   OracleLinux_9_5                 Oracle Linux 9.5
+   openSUSE-Leap-15.6              openSUSE Leap 15.6
+   SUSE-Linux-Enterprise-15-SP6    SUSE Linux Enterprise 15 SP6
+   ```
+
+
+1. Install a specific Ubuntu distro using a NAME from the output above:
+   ```
+   wsl --install Ubuntu-24.04
+   ```
+1. To show detailed information about all installed distributions, ```run wsl -l -v```.
+2. To start a WSL instance from PowerShell terminal with Ubuntu home as the working directory, run ```wsl ~```.
+3. Update and upgrade the packages and libraries:
+   ```
+   sudo apt update
+   sudo apt upgrade -y
+   ```
+3. Install some basic tools you will use later with Open5GS.
+   ```
+   sudo apt install -y wget gnupg net-tools iproute2
+   ```
+For more alternatives ways of installing Ubuntu distros on WSL,you can refer to Ubuntu [documentation](https://documentation.ubuntu.com/wsl/stable/howto/install-ubuntu-wsl2/).
+
+Once WSL is in place, you can proceed with Open5GS installation by following the Open5GS [documentation](https://open5gs.org/open5gs/docs/guide/01-quickstart/).
 
 ## Architectural Concept Applying CUPS in the Lab
 
@@ -395,7 +454,7 @@ You can download the captured trace from here.
 
 [![Trace download](./images/icon_file_download_128_28401.png)](https://github.com/Heshamahyoup/Building-a-Full-LTE-Network-using-srsRAN-Open5GS-with-over-WSL/raw/refs/heads/main/traces/Full-CUPS-LTE-Network-using-srsRAN-Open5GS-with-over-WSL.pcap)
 
-# Troubleshoting 
+## Troubleshoting 
 Despite the attach success procedure and GTP tunnel,from srsue log on the terminal, we noted that the srsUE couldn't create and configure its tun_srsue interface, because the WSL network stack is shared with Windows virtual networking and the srsUE needs its own namespace in order to be able to configure the tun-srsue.
 
 ![5gs](./images/Failed-to-configure-GW.png)

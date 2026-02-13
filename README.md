@@ -61,7 +61,7 @@ Open5GS internally implements this separation exactly as defined by 3GPP and thi
 
 Please refer to the diagram from Open5gs [website](https://open5gs.org/open5gs/docs/guide/01-quickstart/)
 
-![Open5gs CUPS diagram](../assets/images/Open5GS_CUPS-01.jpg)
+![Open5gs CUPS diagram](./images/Open5GS_CUPS-01.jpg)
 
 
 
@@ -398,7 +398,7 @@ You can download the captured trace from here.
 # Troubleshoting 
 Despite the attach success procedure and GTP tunnel,from srsue log on the terminal, we noted that the srsUE couldn't create and configure its tun_srsue interface, because the WSL network stack is shared with Windows virtual networking and the srsUE needs its own namespace in order to be able to configure the tun-srsue.
 
-![5gs](../assets/images/Failed-to-configure-GW.png)
+![5gs](./images/Failed-to-configure-GW.png)
 
 The profissional solution to fix this problem to give srsUE its own clean Linux network stack by creating separated namespace. 
 

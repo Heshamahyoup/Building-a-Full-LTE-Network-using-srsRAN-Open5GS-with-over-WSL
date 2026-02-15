@@ -411,7 +411,8 @@ ogstun: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1400
 * Verify the NAT-ing which tells Linux to perform source NAT (masquerading) on traffic from the UE subnet, but only when it goes out to interfaces other than ogstun.
 ```
 sudo iptables -t nat -A POSTROUTING -s 10.45.0.0/16 ! -o ogstun -j MASQUERADE
-sudo iptables -t nat -L -n -v
+sudo iptables -t nat -L -n -v   # list the configured NAT
+sudo iptables -t nat -F         # remove all configured NAT
 ```
 
 * Verify whether the TUN Device is exist or not.

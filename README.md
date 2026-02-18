@@ -13,7 +13,6 @@ This setup allowed you to validate the below:
 * Session establishment via PGW-C(SMF).
 * GTP-U tunnel creation via PGW-U(UPF).
 * IP address allocation from EPC.
-* Linux TUN/TAP integration.
 * Deep troubleshooting of control plane vs user plane behavior.
 
 All of these will be achieved without SDR hardware.
